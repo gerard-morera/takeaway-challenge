@@ -1,8 +1,7 @@
-require_relative "order_processor"
 
 class Customer 
 
-	def initialize menu: ::BASIC_MENU, dish_presenter: BasicPresenter, input_parser: BasicInputParser, order_processor: order_processor
+	def initialize(menu: ::BASIC_MENU, dish_presenter: BasicPresenter, input_parser: BasicInputParser, order_processor:)
 		@menu 				   = menu
 		@dish_presenter  = dish_presenter
 		@input_parser    = input_parser
@@ -15,18 +14,14 @@ class Customer
 		end
 	end
 
-	def take_order
+	def take_order(order_name)
     require_order_with_format	
-    process_order input_parser.call( gets.chomp ) # don't use gets in your code!
+    order_processor.process(input_parser.call( order_name )) # don't use gets in your code!
 	end
 
 	private
 
 	attr_reader :order_handler, :menu, :dish_presenter, :input_parser, :order_processor
-
-	def process_order order
-		order_processor.process order
-	end
 
   def require_order_with_format
     puts "Give your order in this format:" # don't use puts!

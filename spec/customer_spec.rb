@@ -2,59 +2,14 @@ require 'customer'
 
 describe Customer do
 
-	let( :customer      ) do 
-		Customer.new order_handler, menu, dish_presenter, 
-		input_parser, order_processor
-	end
+  let(:order_processor) { double(:order_processor) }
 
-	let( :menu ) { double :menu, dish_presenter: nil }
-	let( :order_processor ) { double :order_processor, :process => nil }
-	let( :order) { :double }
+  it 'takes an order' do
+    customer = Customer.new order_processor: order_processor
 
-	describe "#print_menu" do
-		
-		let( :puts ) { double }
+    expect(order_processor).to receive(:process).with 'potatoes: 1, carrots: 2, price: 10'
+    
+    customer.take_order('potatoes: 1, carrots: 2, price: 10')
+  end
 
-		it "expects menu to respond_to dish_presenter" do # Don't test doubles!!!
-			expect( menu.dish_presenter ).to eq nil
-			menu.dish_presenter
-		end
-
-		# it "displays the menu" do
-
-		# 	expect( STDOUT ).to receive( :puts ).with("")
-		# 	subject.print_menu
-		# end
-	end
-
-	describe "#take_order" do
-		it "gets the order" do
-			#code
-		end
-
-		it "gets the input" do
-			expect( gets.chomp ).to eq "" # >_< You're testing a ruby method and giving me the option of making it fail
-		end
-
-		it "process the order" do # order_processor is also a double
-			expect( order_processor ).to receive( :process ).with order
-			order_processor.process order
-		end
-	end
-	
-end
-
-
-	# describe "#get_menu" do
-	# 	it "requests the menu" do
-	# 		expect( order_handler ).to receive :show_menu
-	# 		customer.get_menu
-	# 	end
-	# end
-
-	# describe "#send_order" do
-	# 	it "sends an order" do
-	# 		expect( order_handler ).to receive :process_order
-	# 		customer.send_order "an_order"
-	# 	end
-	# end
+end # make it pass!
