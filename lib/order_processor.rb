@@ -21,7 +21,7 @@ class OrderProcessor
 		if validator.call( customer_price[1].to_i, company_price )
 			Notifier.call
 		else
-			raise_exception
+			raise "InvalidPriceError" 
 		end
 	end
 	
@@ -33,10 +33,6 @@ class OrderProcessor
 		dishes_with_price.reduce( 0 ) do |acum, ( dish, price )|
 			price.to_i + acum 
 		end
-	end
-
-	def raise_exception
-		raise "InvalidPriceError" 
 	end
 
 end

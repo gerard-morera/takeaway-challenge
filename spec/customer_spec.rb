@@ -15,7 +15,7 @@ describe Customer do
 		
 		let( :puts ) { double }
 
-		it "expects menu to respond_to dish_presenter" do
+		it "expects menu to respond_to dish_presenter" do # Don't test doubles!!!
 			expect( menu.dish_presenter ).to eq nil
 			menu.dish_presenter
 		end
@@ -33,10 +33,10 @@ describe Customer do
 		end
 
 		it "gets the input" do
-			expect( gets.chomp ).to eq ""
+			expect( gets.chomp ).to eq "" # >_< You're testing a ruby method and giving me the option of making it fail
 		end
 
-		it "process the order" do
+		it "process the order" do # order_processor is also a double
 			expect( order_processor ).to receive( :process ).with order
 			order_processor.process order
 		end

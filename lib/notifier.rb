@@ -1,9 +1,7 @@
 require 'twilio-ruby'
+require './.env.rb'
 
 class Notifier
-
-	ACCOUNT_SID = ["AC9b75faaa7dc888de8801780784c0639b"]
-	AUTH_TOKEN  = "3c23078fac6c0265238b303c7eb4c3c1"
 
   MESSAGE = "Your order will arrive at {time}"
 
@@ -13,16 +11,15 @@ class Notifier
     @message = opts[ :message ] || 'MESSAGE'
     @from    = opts[ :from    ] || '+441622523155'
     @to      = opts[ :to      ] || '+4407761960879'
-    @via     = opts[ :via     ] || Twilio::REST::Client.new( ACCOUNT_SID, AUTH_TOKEN )
+    @via     = opts[ :via     ] || Twilio::REST::Client.new( ENV['ACCOUNT_SID'], ENV['AUTH_TOKEN'] )
   end
 
   def self.call( *args )
-      new(*args).send_message  
+    new(*args).send_message  
   end
 
   def send_message 
-    via.account.messages.create( {
-      
+    via.messages.create( {
                             from: from,
                             to:   to,
                             body: message

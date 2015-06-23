@@ -9,7 +9,7 @@ describe OrderProcessor do
 		
 		context "when is accepted" do
 			it "pass call to notifier" do
-				expect( notifier ).to receive :call
+				expect( notifier ).to receive :call # here you're not testing OrderProcessor
 				notifier.call
 			end
 		end
